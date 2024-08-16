@@ -1,0 +1,101 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// meus models
+
+model Cliente {
+  id         Int        @id @default(autoincrement())
+  nome       String
+  email      String     @unique
+  senha      String
+  cpf        String?
+  telefone   String?
+  enderecoId Int?
+  endereco   Endereco?  @relation(fields: [enderecoId], references: [id])
+  uploads    Upload[]
+  carrinho   Carrinho[]
+  token      Token[]
+}
+
+model Endereco {
+  id          Int       @id @default(autoincrement())
+  cidade      String
+  uf          String
+  rua         String
+  bairro      String
+  numero      String
+  cep         String
+  complemento String
+  cliente     Cliente[]
+}
+
+model Administrador {
+  id       Int       @id @default(autoincrement())
+  nome     String
+  email    String    @unique
+  senha    String
+  produtos Produto[]
+}
+
+model Produto {
+  id              Int           @id @default(autoincrement())
+  titulo          String
+  imagem          String
+  subtitulo       String?
+  tipo            String
+  subtipo         String
+  descricao       String?
+  preco           String
+  administradorId Int
+  administrador   Administrador @relation(fields: [administradorId], references: [id])
+  Carrinho        Carrinho[]
+}
+
+model Upload {
+  id         Int    @id @default(autoincrement())
+  arquivo    String
+  clienteId  Int
+  carrinhoId Int
+
+  cliente  Cliente  @relation(fields: [clienteId], references: [id])
+  carrinho Carrinho @relation(fields: [carrinhoId], references: [id])
+}
+
+model Carrinho {
+  id         Int    @id @default(autoincrement())
+  quantidade Int
+  descricao  String
+  clienteId  Int
+  produtoId  Int
+
+  cliente Cliente  @relation(fields: [clienteId], references: [id])
+  produto Produto  @relation(fields: [produtoId], references: [id])
+  Upload  Upload[]
+}
+
+model Pedido {
+  id   Int      @id @default(autoincrement())
+  pdf  String
+  data DateTime @default(now())
+}
+
+model Token {
+  id        Int    @id @default(autoincrement())
+  token     String @unique
+  clienteId Int
+  status    String @default("pending")
+
+  Cliente Cliente @relation(fields: [clienteId], references: [id])
+}
