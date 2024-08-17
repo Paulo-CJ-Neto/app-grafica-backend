@@ -1,4 +1,7 @@
+require('dotenv').config()
 const nodemailer = require('nodemailer')
+
+const API_URL = process.env.API_URL
 
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
@@ -9,7 +12,7 @@ const transporter = nodemailer.createTransport({
 })
 
 exports.sendVerificationEmail = (userEmail, verificationToken) => {
-  const verificationLink = `http://192.168.1.106:3000/api/verify?token=${verificationToken}`
+  const verificationLink = `${API_URL}/api/verify?token=${verificationToken}`
 
   const mailOptions = {
     from: 'agraficadoseventosteste@gmail.com',
