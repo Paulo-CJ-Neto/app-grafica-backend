@@ -19,19 +19,16 @@ exports.getProductsByType = async (req, res) => {
 }
 
 exports.postProduct = async (req, res) => {
-  const productCharacteristics = {
-    ...req.body
-  }
+  const productCharacteristics = req.body
+
 
   try {
-    await prisma.produto.create({
-      data: {
-        ...productCharacteristics
-      }
+    const produto = await prisma.produto.create({
+      data: productCharacteristics
     })
-
     return res.status(201).send('Produto adicionado')
   } catch (err) {
+    console.error(err)
     return res.status(500).send('nao foi possivel adicionar o produto')
   } finally {
     await prisma.$disconnect()
@@ -41,7 +38,7 @@ exports.postProduct = async (req, res) => {
 exports.deleteProduct = async (req, res) => {
   const { id } = req.params
   const idNumber = parseInt(id)
-  
+
   try {
     await prisma.produto.delete({
       where: {
@@ -57,22 +54,17 @@ exports.deleteProduct = async (req, res) => {
 }
 
 exports.putProduct = async (req, res) => {
-  const { id } = req.params
-  const idNumber = parseInt(id)
-  const productCharacteristics = {
-    ...req.body
-  }
+  const id = Number(req.params.id)
+  const productCharacteristics = req.body
 
   try {
     await prisma.produto.update({
       where: {
-        id: idNumber
+        id
       },
-      data: {
-        ...productCharacteristics
-      }
+      data: productCharacteristics
     })
-    
+
     return res.status(201).send('Produto alterado')
   } catch (err) {
     return res.status(500).send('nao foi possivel alterar o produto')

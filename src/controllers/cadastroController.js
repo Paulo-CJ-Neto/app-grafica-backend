@@ -71,8 +71,6 @@ exports.signUp = async (req, res) => {
       return res.status(500).send('Não foi possivel associar token à cliente')
     }
 
-    return res.status(200).send('Usuário cadastrado com sucesso!')
-
   } catch (err) {
     return res.status(500).send(`nao foi possivel cadastrar por erro interno, ${err}`)
   } finally {

@@ -23,9 +23,9 @@ exports.sendVerificationEmail = (userEmail, verificationToken) => {
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.log('Error ao enviar e-mail:', error)      
+      console.error('Error ao enviar e-mail:', error)      
     } else {
-      console.log('E-mail enviado: ', info.response);
+      console.warn('E-mail enviado: ', info.response);
     }
   })
 }
