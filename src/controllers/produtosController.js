@@ -1,4 +1,5 @@
 const prisma = require('../prisma/prismaClient')
+const uploadImage = require('../utils/uploadImage')
 
 exports.getProductsByType = async (req, res) => {
   const { tipo, subtipo } = req.query
@@ -20,6 +21,7 @@ exports.getProductsByType = async (req, res) => {
 
 exports.postProduct = async (req, res) => {
   const productCharacteristics = req.body
+  console.log(productCharacteristics);
 
 
   try {
@@ -70,5 +72,18 @@ exports.putProduct = async (req, res) => {
     return res.status(500).send('nao foi possivel alterar o produto')
   } finally {
     await prisma.$disconnect()
+  }
+}
+
+exports.postProductImage = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).send('Nenhum arquivo foi enviado')
+    }
+    const imageURL = await uploadImage(req.file.path)
+    res.send(imageURL)
+  } catch (err) {
+    console.error('Erro no upload da imagem: ', err)
+    res.status(500).send('Erro no upload da imagem')
   }
 }

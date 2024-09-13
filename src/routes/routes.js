@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const upload = require('../utils/multerConfig.js')
 const clienteController = require('../controllers/clienteController.js');
 const cadastroController = require('../controllers/cadastroController.js');
 const loginController = require('../controllers/loginController.js');
@@ -30,5 +31,8 @@ router.put('/produtos/:id', produtosController.putProduct);
 
 // Rota para verificar token de email
 router.get('/verify', cadastroController.verifyTokenEmail);
+
+// Rota para upload de imagem
+router.post('/upload', upload.single('image'), produtosController.postProductImage);
 
 module.exports = router;
