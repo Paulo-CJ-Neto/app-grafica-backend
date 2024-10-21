@@ -24,6 +24,7 @@ model Cliente {
   telefone      String?
   enderecoId    Int?
   tipoDeUsuario String     @default("user")
+  deleteHash    String?
   endereco      Endereco?  @relation(fields: [enderecoId], references: [id])
   uploads       Upload[]
   carrinho      Carrinho[]
@@ -44,17 +45,18 @@ model Endereco {
 }
 
 model Produto {
-  id        Int        @id @default(autoincrement())
-  titulo    String
-  imagem    String
-  subtitulo String?
-  tipo      String
-  subtipo   String
-  descricao String?
-  preco     String
-  clienteId Int
-  cliente   Cliente    @relation(fields: [clienteId], references: [id])
-  Carrinho  Carrinho[]
+  id         Int        @id @default(autoincrement())
+  titulo     String
+  imagem     String
+  subtitulo  String?
+  tipo       String
+  subtipo    String
+  descricao  String?
+  preco      String
+  deleteHash String?
+  clienteId  Int
+  cliente    Cliente    @relation(fields: [clienteId], references: [id])
+  Carrinho   Carrinho[]
 }
 
 model Upload {
@@ -69,6 +71,7 @@ model Upload {
 
 model Carrinho {
   id         Int    @id @default(autoincrement())
+  imagem     String?
   quantidade Int
   descricao  String
   clienteId  Int

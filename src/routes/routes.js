@@ -6,6 +6,7 @@ const cadastroController = require('../controllers/cadastroController.js');
 const loginController = require('../controllers/loginController.js');
 const produtosController = require('../controllers/produtosController.js');
 const enderecoController = require('../controllers/enderecoController.js');
+const carrinhoController = require('../controllers/carrinhoController.js')
 
 // Rotas para /clientes
 router.get('/clientes', clienteController.getAllClientes);
@@ -25,6 +26,7 @@ router.post('/login', loginController.signIn);
 
 // Rotas para /produtos
 router.get('/produtos', produtosController.getProductsByType);
+router.get('/produtos/:id', produtosController.getProductById)
 router.post('/produtos', produtosController.postProduct);
 router.delete('/produtos/:id', produtosController.deleteProduct);
 router.put('/produtos/:id', produtosController.putProduct);
@@ -34,5 +36,10 @@ router.get('/verify', cadastroController.verifyTokenEmail);
 
 // Rota para upload de imagem
 router.post('/upload', upload.single('image'), produtosController.postProductImage);
+
+// Rota para /carrinho
+router.get('/carrinho/:clientId', carrinhoController.getCartByClientId)
+router.post('/carrinho', carrinhoController.postCartItem)
+router.delete('/carrinho/:cartItemId', carrinhoController.deleteCartItem)
 
 module.exports = router;

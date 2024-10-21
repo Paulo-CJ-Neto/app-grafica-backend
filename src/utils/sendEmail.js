@@ -18,7 +18,7 @@ exports.sendVerificationEmail = (userEmail, verificationToken) => {
     from: 'agraficadoseventosteste@gmail.com',
     to: userEmail,
     subject: 'Verifique seu e-mail',
-    html: `<p> Obrigado por se cadastrar! Clique no link abaixo para verificar seu e-mail:</p> <a href="${verificationLink}">Verificar E-mail</a>`
+    html: `<p> Obrigado por se cadastrar em <strong>A Gráfica dos Eventos</strong>! Clique no link abaixo para verificar seu e-mail:</p> <a href="${verificationLink}">Verificar E-mail</a>`
   }
 
   transporter.sendMail(mailOptions, (error, info) => {

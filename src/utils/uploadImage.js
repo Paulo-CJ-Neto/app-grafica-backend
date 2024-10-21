@@ -20,7 +20,10 @@ const uploadImage = async (pathImage) => {
         },
       }
     );
-    return response.data.data.link;
+    fs.unlink(pathImage, (err) => {
+      if (err) throw err
+    })
+    return { link: response.data.data.link, deleteHash: response.data.data.deletehash };
   } catch (error) {
     console.error('Erro ao fazer upload da imagem:', error.response ? error.response.data : error.message);
   }

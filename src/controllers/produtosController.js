@@ -19,10 +19,25 @@ exports.getProductsByType = async (req, res) => {
   }
 }
 
+exports.getProductById = async (req, res) => {
+  const productId = parseInt(req.params.id)
+
+  try {
+    const produto = await prisma.produto.findUnique({
+      where: {
+        id: productId
+      }
+    })
+    return res.status(200).json(produto)
+  } catch (err) {
+    return res.status(500).send('Não foi possivel buscar o produto por erro no servidor')
+  } finally {
+    prisma.$disconnect()
+  }
+}
+
 exports.postProduct = async (req, res) => {
   const productCharacteristics = req.body
-  console.log(productCharacteristics);
-
 
   try {
     const produto = await prisma.produto.create({
@@ -80,8 +95,9 @@ exports.postProductImage = async (req, res) => {
     if (!req.file) {
       return res.status(400).send('Nenhum arquivo foi enviado')
     }
-    const imageURL = await uploadImage(req.file.path)
-    res.send(imageURL)
+    const { link, deleteHash } = await uploadImage(req.file.path)
+    
+    res.status(201).json({ link, deleteHash })
   } catch (err) {
     console.error('Erro no upload da imagem: ', err)
     res.status(500).send('Erro no upload da imagem')
