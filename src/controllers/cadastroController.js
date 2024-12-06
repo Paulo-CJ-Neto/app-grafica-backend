@@ -23,7 +23,7 @@ exports.signUp = async (req, res) => {
       if (tokenCliente && tokenCliente.status !== "checked") {
         const tokenGenerated = generateToken()
         await prisma.token.update({
-          where: { clienteId: clienteAssociado.id },
+          where: { token: tokenCliente.token },
           data: { token: tokenGenerated }
         })
         sendVerificationEmail(email, tokenGenerated)
