@@ -9,6 +9,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', clienteRoutes)
 
+app.get('/ping', (req, res) => {
+  res.send('pong')
+})
+
 app.get('/', (req, res) => {
   res.send('Bem vindo ao servidor da grafica!')
 })
