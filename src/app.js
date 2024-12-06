@@ -1,5 +1,4 @@
 const https = require('https');
-const http = require('http'); // Adicionando http para usar localmente
 const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser');
