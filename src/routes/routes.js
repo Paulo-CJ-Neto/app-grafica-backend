@@ -43,8 +43,4 @@ router.get('/carrinho/:clientId', carrinhoController.getCartByClientId)
 router.post('/carrinho', carrinhoController.postCartItem)
 router.delete('/carrinho/:cartItemId', carrinhoController.deleteCartItem)
 
-// Rota para /pedido
-// router.get('/pedido/:id', pedidoController.getOrderById)
-// router.post('/pedido/:clientId', pedidoController.postOrderByClientId)
-
 module.exports = router;

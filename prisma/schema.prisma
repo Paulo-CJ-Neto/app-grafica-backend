@@ -16,20 +16,21 @@ datasource db {
 // meus models
 
 model Cliente {
-  id            Int        @id @default(autoincrement())
+  id            Int     @id @default(autoincrement())
   nome          String
-  email         String     @unique
+  email         String  @unique
   senha         String
   cpf           String?
   telefone      String?
   enderecoId    Int?
-  tipoDeUsuario String     @default("user")
+  tipoDeUsuario String  @default("user")
   deleteHash    String?
-  endereco      Endereco?  @relation(fields: [enderecoId], references: [id])
-  uploads       Upload[]
-  carrinho      Carrinho[]
-  token         Token[]
-  produtos      Produto[]
+
+  endereco Endereco?  @relation(fields: [enderecoId], references: [id])
+  uploads  Upload[]
+  carrinho Carrinho[]
+  token    Token[]
+  produtos Produto[]
 }
 
 model Endereco {
@@ -70,7 +71,7 @@ model Upload {
 }
 
 model Carrinho {
-  id         Int    @id @default(autoincrement())
+  id         Int     @id @default(autoincrement())
   imagem     String?
   quantidade Int
   descricao  String
@@ -90,8 +91,8 @@ model Pedido {
 
 model Token {
   id        Int    @id @default(autoincrement())
-  token     String @unique
-  clienteId Int
+  token     String
+  clienteId Int    @unique
   status    String @default("pending")
 
   Cliente Cliente @relation(fields: [clienteId], references: [id])
