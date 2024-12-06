@@ -9,7 +9,11 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', clienteRoutes)
 
+app.get('/', (req, res) => {
+  res.send('Bem vindo ao servidor da grafica!')
+})
+
 const PORT = 3000
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`servidor rodando na porta ${PORT}...`);
 })

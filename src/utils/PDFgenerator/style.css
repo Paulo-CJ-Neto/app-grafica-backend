@@ -1,0 +1,126 @@
+/* Reseta as margens e padding padrão */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Fundo do body */
+body {
+  background: rgb(204, 204, 204);
+}
+
+/* Container principal com tamanho A4 */
+.page {
+  background: rgb(255, 255, 255);
+  width: 100%;
+  height: 100%;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+  /* Garante que uma nova página começará em uma nova folha */
+  page-break-after: always;
+  break-after: page;
+}
+
+/* Área de conteúdo com margens */
+.content {
+  height: 277mm; 
+  font-family: "Inter", sans-serif;
+}
+
+.halfPageInpiration {
+  margin: 10mm 0mm;
+  width: 100%;
+  height: calc(45% - 10mm); 
+  /* Evita quebra dentro da seção */
+  page-break-inside: avoid;
+  break-inside: avoid;
+  /* Se necessário, força quebra antes */
+  page-break-before: auto;
+  break-before: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 20mm;
+  /* Evita quebra do cabeçalho */
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.dateInLine {
+  display: flex;
+  justify-content: space-around;
+  width: 40%;
+}
+
+.top {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 60%;
+  justify-content: space-around;
+}
+
+.topContainer {
+  margin: 2mm;
+  width: 50%;
+  height: calc(100% - 5mm);
+  padding: 1mm;
+}
+
+.fotoContainer {
+  padding: 0;
+}
+
+.down {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 40%;
+  justify-content: space-evenly;
+}
+
+.downContainer {
+  width: 30%;
+  height: calc(100% - 5mm);
+  padding: 1mm;
+}
+
+.bg-gray {
+  background-color: #ebebeb;
+  border-radius: 3mm;
+}
+
+#photo {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+/* Ajustes para impressão */
+@media print {
+  body {
+    background: none;
+  }
+
+  .page {
+    margin: 0;
+    box-shadow: none;
+    height: 297mm;
+  }
+
+  /* Reforçar regras de quebra de página na impressão */
+  .halfPageOrder,
+  .halfPageInpiration,
+  .header {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+}

@@ -10,7 +10,7 @@ exports.getCartByClientId = async (req, res) => {
       }
     })
 
-    return res.status(200).json(result)
+    return res.status(200).json(result || {})
   } catch (err) {
     return res.status(500).send('Nao foi possivel pegar itens do carrinho do cliente')
   } finally {

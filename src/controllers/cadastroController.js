@@ -11,13 +11,25 @@ exports.signUp = async (req, res) => {
       return res.status(400).send('Todos os campos precisam ser preenchidos!')
     }
 
-    const clienteExiste = await prisma.cliente.findFirst({
+    const clienteAssociado = await prisma.cliente.findFirst({
       where: {
         email: email
       }
     })
 
-    if (clienteExiste) {
+    // const tokenCliente = await prisma.token.findFirst({
+    //   where: {
+    //     clienteId: clienteAssociado.id
+    //   }
+    // })
+
+    // tokenStatus = tokenCliente.status
+
+    // if (tokenStatus != "checked") {
+    //   return res.status(400).send('Verifique o ultimo link de verificação enviado ao seu E-mail!')
+    // }
+
+    if (clienteAssociado) {
       return res.status(400).send('E-mail já cadastrado!')
     }
 
